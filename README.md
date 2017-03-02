@@ -47,6 +47,18 @@ An example for a shell runner. This enables the build of Docker images.
     "RUNNER_TAG_LIST": "shell,build-as-docker",
     "RUNNER_CONCURRENT_BUILDS": "4"
   }
+  "healthChecks": [
+    {
+      "protocol": "COMMAND",
+      "command": {
+        "value": "curl -f -X GET --unix-socket /var/run/docker.sock http:/containers/json"
+      },
+      "gracePeriodSeconds": 60,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 10,
+      "maxConsecutiveFailures": 5
+    }
+  ],
 }
 ``` 
 
