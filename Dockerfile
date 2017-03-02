@@ -5,16 +5,16 @@ MAINTAINER TobiLG <tobilg@gmail.com>
 # Download dumb-init
 ADD https://github.com/Yelp/dumb-init/releases/download/v1.0.2/dumb-init_1.0.2_amd64 /usr/bin/dumb-init
 
-ENV DIND_COMMIT 3b5fac462d21ca164b3778647420016315289034
+ENV DIND_COMMIT 1.12.x
 
-ENV GITLAB_RUNNER_VERSION=1.10.4
+ENV GITLAB_RUNNER_VERSION=1.11.0
 
-ENV DOCKER_ENGINE_VERSION=1.11.2-0~xenial
+ENV DOCKER_ENGINE_VERSION=1.12.6-0~ubuntu-xenial
 
 # Install components and do the preparations
 # 1. Install needed packages
 # 2. Install GitLab CI runner
-# 3. Install mesosdns-resolver
+# 3. Install mesosdns-resolver REMOVED
 # 4. Install Docker
 # 5. Install DinD hack
 # 6. Cleanup
@@ -28,8 +28,6 @@ RUN apt-get update -y && \
     apt-get install -y gitlab-ci-multi-runner=${GITLAB_RUNNER_VERSION} && \
     mkdir -p /etc/gitlab-runner/certs && \
     chmod -R 700 /etc/gitlab-runner && \
-    curl -sSL https://raw.githubusercontent.com/tobilg/mesosdns-resolver/master/mesosdns-resolver.sh -o /usr/local/bin/mesosdns-resolver && \
-    chmod +x /usr/local/bin/mesosdns-resolver && \
     apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D && \
     apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' && \
     apt-get update && \
