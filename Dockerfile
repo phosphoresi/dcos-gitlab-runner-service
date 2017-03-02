@@ -14,10 +14,9 @@ ENV DOCKER_ENGINE_VERSION=1.12.6-0~ubuntu-xenial
 # Install components and do the preparations
 # 1. Install needed packages
 # 2. Install GitLab CI runner
-# 3. Install mesosdns-resolver REMOVED
-# 4. Install Docker
-# 5. Install DinD hack
-# 6. Cleanup
+# 3. Install Docker
+# 4. Install DinD hack
+# 5. Cleanup
 RUN apt-get update -y && \
     apt-get upgrade -y && \
     apt-get install -y ca-certificates apt-transport-https curl dnsutils bridge-utils lsb-release software-properties-common && \
