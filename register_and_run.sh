@@ -89,7 +89,7 @@ else
 fi
 
 echo "==> Launching the Docker daemon..."
-dind docker daemon --host=unix:///var/run/docker.sock --storage-driver=aufs $DOCKER_EXTRA_OPTS &
+dind docker daemon --host=unix:///var/run/docker.sock --storage-driver=overlay2 $DOCKER_EXTRA_OPTS &
 
 # Wait for the Docker daemon to start
 while(! docker info > /dev/null 2>&1); do
