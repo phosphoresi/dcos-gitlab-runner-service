@@ -5,7 +5,7 @@ MAINTAINER TobiLG <tobilg@gmail.com>
 # Download dumb-init
 ADD https://github.com/Yelp/dumb-init/releases/download/v1.0.2/dumb-init_1.0.2_amd64 /usr/bin/dumb-init
 
-ENV DIND_COMMIT 1.12.x
+ENV DIND_COMMIT v17.05.0-ce
 
 ENV GITLAB_RUNNER_VERSION=1.11.4
 
@@ -28,7 +28,7 @@ RUN apt-get update -y && \
     mkdir -p /etc/gitlab-runner/certs && \
     chmod -R 700 /etc/gitlab-runner && \
     apt-get update && \
-    curl -sSL https://raw.githubusercontent.com/docker/docker/${DIND_COMMIT}/hack/dind -o /usr/local/bin/dind && \
+    curl -sSL https://raw.githubusercontent.com/moby/moby/${DIND_COMMIT}/hack/dind -o /usr/local/bin/dind && \
     chmod a+x /usr/local/bin/dind && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
