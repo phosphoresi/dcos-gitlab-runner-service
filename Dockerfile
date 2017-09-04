@@ -9,7 +9,7 @@ ENV DIND_COMMIT 1.12.x
 
 ENV GITLAB_RUNNER_VERSION=1.11.4
 
-ENV DOCKER_ENGINE_VERSION=1.12.6-0~ubuntu-xenial
+ENV DOCKER_ENGINE_VERSION=17.06
 
 # Install components and do the preparations
 # 1. Install needed packages
@@ -27,10 +27,8 @@ RUN apt-get update -y && \
     apt-get install -y gitlab-ci-multi-runner=${GITLAB_RUNNER_VERSION} && \
     mkdir -p /etc/gitlab-runner/certs && \
     chmod -R 700 /etc/gitlab-runner && \
-    apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D && \
-    apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' && \
     apt-get update && \
-    apt-get install -y docker-engine=${DOCKER_ENGINE_VERSION} && \
+    curl https://releases.rancher.com/install-docker/{DOCKER_ENGINE_VERSION}.sh | sh
     curl -sSL https://raw.githubusercontent.com/docker/docker/${DIND_COMMIT}/hack/dind -o /usr/local/bin/dind && \
     chmod a+x /usr/local/bin/dind && \
     apt-get clean && \
