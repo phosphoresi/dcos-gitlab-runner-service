@@ -33,7 +33,7 @@ RUN apt-get update -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
     
-RUN curl https://releases.rancher.com/install-docker/{DOCKER_ENGINE_VERSION}.sh | sh 
+RUN curl https://releases.rancher.com/install-docker/${DOCKER_ENGINE_VERSION}.sh | sh 
 
 # Add wrapper script
 ADD register_and_run.sh /
