@@ -28,11 +28,12 @@ RUN apt-get update -y && \
     mkdir -p /etc/gitlab-runner/certs && \
     chmod -R 700 /etc/gitlab-runner && \
     apt-get update && \
-    curl https://releases.rancher.com/install-docker/{DOCKER_ENGINE_VERSION}.sh | sh && \
     curl -sSL https://raw.githubusercontent.com/docker/docker/${DIND_COMMIT}/hack/dind -o /usr/local/bin/dind && \
     chmod a+x /usr/local/bin/dind && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+    
+RUN curl https://releases.rancher.com/install-docker/{DOCKER_ENGINE_VERSION}.sh | sh 
 
 # Add wrapper script
 ADD register_and_run.sh /
