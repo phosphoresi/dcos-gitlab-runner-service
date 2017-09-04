@@ -1,5 +1,6 @@
 #!/bin/sh
-
+DATA_DIR="/var/gitlab"
+mkdir -p ${DATA_DIR}
 set -eu
 
 # Ensure CI_SERVER_URL (custom defined variable). We need this to register runner
@@ -53,20 +54,20 @@ if [ -f "${CA_CERTIFICATES_PATH}" ]; then
   cmp --silent "${CA_CERTIFICATES_PATH}" "${LOCAL_CA_PATH}" || update_ca
 fi
 
-# Derive the RUNNER_NAME from the MESOS_TASK_ID
-export RUNNER_NAME=${MESOS_TASK_ID}
+# Derive the RUNNER_NAME from the container hostname
+export RUNNER_NAME=${HOSTNAME}
 
 # Enable non-interactive registration the the main GitLab instance
 export REGISTER_NON_INTERACTIVE=true
 
 # Set the RUNNER_BUILDS_DIR
-export RUNNER_BUILDS_DIR=${MESOS_SANDBOX}/builds
+export RUNNER_BUILDS_DIR=${DATA_DIR}/builds
 
 # Set the RUNNER_CACHE_DIR
-export RUNNER_CACHE_DIR=${MESOS_SANDBOX}/cache
+export RUNNER_CACHE_DIR=${DATA_DIR}/cache
 
 # Set the RUNNER_WORK_DIR
-export RUNNER_WORK_DIR=${MESOS_SANDBOX}/work
+export RUNNER_WORK_DIR=${DATA_DIR}/work
 
 # Create directories
 mkdir -p $RUNNER_BUILDS_DIR $RUNNER_CACHE_DIR $RUNNER_WORK_DIR
@@ -101,7 +102,7 @@ echo "==> Docker Daemon is up and running!"
 _getTerminationSignal() {
     echo "Caught SIGTERM signal! Deleting GitLab Runner!"
     # Unregister (by name). See https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/tree/master/docs/commands#by-name
-    gitlab-runner unregister --name ${MESOS_TASK_ID}
+    gitlab-runner unregister --name ${HOSTNAME}
     # Exit with error code 0
     exit 0
 }
